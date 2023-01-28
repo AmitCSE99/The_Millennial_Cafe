@@ -1,6 +1,7 @@
 package com.backend.user_service.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,7 +34,7 @@ public class Address {
     @Column(name = "PIN_CODE",nullable = false)
     private int addressPinCode;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;

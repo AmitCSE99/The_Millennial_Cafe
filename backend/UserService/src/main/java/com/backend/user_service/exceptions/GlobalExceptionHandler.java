@@ -38,7 +38,6 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(InvalidDataException.class)
     public  ResponseEntity<Map<String,Object>> invalidDataException(InvalidDataException exception){
-        //System.out.println(exception.getConstraintViolations());
         return ResponseGenerator.generateFailureResponse(HttpStatus.INTERNAL_SERVER_ERROR,exception.getMessage());
     }
 }

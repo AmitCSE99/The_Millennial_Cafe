@@ -11,9 +11,9 @@ public interface UserService {
 
     User getUserById(String userId);
 
-    User loginUser(Map<String,String> userData);
+    Map<String,Object> loginUser(Map<String,String> userData);
 
     User editUser(User user);
 
-    User deleteUser(String userId);
+    void deleteUser(String userId);
 }

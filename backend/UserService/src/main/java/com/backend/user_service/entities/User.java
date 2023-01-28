@@ -1,15 +1,20 @@
 package com.backend.user_service.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Getter
 @Setter
 @Builder
@@ -38,7 +43,14 @@ public class User {
     @Column(name = "PASSWORD",nullable = false)
     private String userPassword;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Address> address;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @JsonIgnore
+    @JoinTable(name = "USER_ROLE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
+            @JoinColumn(name = "ROLE_ID") })
+    private Set<Role> roles;
 }

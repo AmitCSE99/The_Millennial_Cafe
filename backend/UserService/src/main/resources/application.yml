@@ -2,6 +2,10 @@ server:
   port: 8081
 
 
+springbootwebfluxjjwt:
+  jjwt:
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength
+    expiration: 28800
 
 spring:
   datasource:
@@ -17,3 +21,15 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+  application:
+    name: USER-SERVICE
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
