@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .pathMatchers("/user/login").permitAll()
                 .pathMatchers("/user/create").permitAll()
                 .pathMatchers("/user/testRole").hasRole("admin")
+                .pathMatchers("/user/**").hasRole("normal")
                 .anyExchange().authenticated()
                 .and().build();
     }

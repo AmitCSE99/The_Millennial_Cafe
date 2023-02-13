@@ -1,5 +1,6 @@
 package com.backend.user_service.services.impl;
 
+import com.backend.user_service.entities.Role;
 import com.backend.user_service.entities.User;
 import com.backend.user_service.exceptions.InvalidDataException;
 import com.backend.user_service.exceptions.ResourceNotFoundException;
@@ -35,12 +36,17 @@ public class UserImpl implements UserService {
         String userId= UUID.randomUUID().toString();
         user.setUserId(userId);
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+        Role role=roleRepository.findById("admin").orElseThrow(()->new ResourceNotFoundException("Not found"));
+        Set<Role> roles=new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
+        System.out.println(user);
         System.out.println(user.getRoles());
         return userRepository.save(user);
     }
 
     @Override
-    public User getUserById(String userId) {
+    public User getUserById(String userId) throws ResourceNotFoundException {
         return userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User is not found!"));
     }
 

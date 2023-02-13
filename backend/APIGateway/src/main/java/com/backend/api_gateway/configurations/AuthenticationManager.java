@@ -31,7 +31,6 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
                 .map(valid -> {
                     Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
                     List<LinkedHashMap<String,String>> rolesMap = claims.get("role", List.class);
-                    //LinkedHashMap<String,String> map =rolesMap.get(0);
                     System.out.println(rolesMap.get(0).get("authority"));
                     List<String> newRolesMap=new ArrayList<>();
                     newRolesMap.add(rolesMap.get(0).get("authority"));

@@ -1,8 +1,10 @@
 package com.backend.user_service.controllers;
 
+import com.backend.user_service.email_services.GEmailSender;
 import com.backend.user_service.entities.Role;
 import com.backend.user_service.entities.User;
 import com.backend.user_service.exceptions.ResourceNotFoundException;
+import com.backend.user_service.otp_services.OTPService;
 import com.backend.user_service.repositories.RoleRepository;
 import com.backend.user_service.response_generators.ResponseGenerator;
 import com.backend.user_service.services.UserService;
@@ -23,15 +25,16 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private GEmailSender gEmailSender;
+
+    @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private OTPService otpService;
 
     @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> createUser(@RequestBody User user){
-        Role role=roleRepository.findById("admin").orElseThrow(()->new ResourceNotFoundException("Not found"));
-        Set<Role> roles=new HashSet<>();
-        roles.add(role);
-        user.setRoles(roles);
-        System.out.println(user);
         User createdUser=userService.createUser(user);
         return ResponseGenerator.generateSuccessResponse(HttpStatus.CREATED,createdUser);
 //        return ResponseGenerator.generateFailureResponse(HttpStatus.NOT_FOUND,"Sample");
@@ -58,6 +61,29 @@ public class UserController {
     public ResponseEntity<Map<String,Object>> editUser(@RequestBody User user){
         User editedUser=userService.editUser(user);
         return ResponseGenerator.generateSuccessResponse(HttpStatus.OK,user);
+    }
+
+    @GetMapping("/sendEmail")
+    public ResponseEntity<String> sendEmail(){
+
+        int otp= otpService.generateOTP("otp");
+
+        String to="amitcse049@gmail.com";
+        String from="amitenducse91@gmail.com";
+        String subject="Sample Subject";
+        String text="Sample Text "+otp;
+
+        boolean f= gEmailSender.sendEmail(to,from,subject,text);
+        if(f){
+            return ResponseEntity.status(HttpStatus.OK).body("Success!!");
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!!");
+        }
+    }
+
+    @GetMapping("/validate/{userOtp}")
+    public ResponseEntity<Integer> validateOtp(@PathVariable String userOtp){
+        return ResponseEntity.status(HttpStatus.OK).body(otpService.getOtp("otp"));
     }
 
     @DeleteMapping("/{userId}")
