@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Mono;
 
+
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
@@ -37,9 +38,9 @@ public class SecurityConfig {
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers("/sample").permitAll()
-                .pathMatchers("/user/login").permitAll()
-                .pathMatchers("/user/create").permitAll()
-                .pathMatchers("/user/testRole").hasRole("admin")
+                .pathMatchers("/user/auth/**").permitAll()
+                .pathMatchers("/user/create-admin").permitAll()
+                .pathMatchers("/user/testRole").hasRole("normal")
                 .pathMatchers("/user/**").hasRole("normal")
                 .anyExchange().authenticated()
                 .and().build();

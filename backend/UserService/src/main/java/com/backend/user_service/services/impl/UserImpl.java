@@ -36,6 +36,20 @@ public class UserImpl implements UserService {
         String userId= UUID.randomUUID().toString();
         user.setUserId(userId);
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+        Role role=roleRepository.findById("normal").orElseThrow(()->new ResourceNotFoundException("Not found"));
+        Set<Role> roles=new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
+        System.out.println(user);
+        System.out.println(user.getRoles());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User createAdminUser(User user) {
+        String userId= UUID.randomUUID().toString();
+        user.setUserId(userId);
+        user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         Role role=roleRepository.findById("admin").orElseThrow(()->new ResourceNotFoundException("Not found"));
         Set<Role> roles=new HashSet<>();
         roles.add(role);

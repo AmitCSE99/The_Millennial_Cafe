@@ -33,14 +33,20 @@ public class UserController {
     @Autowired
     private OTPService otpService;
 
-    @PostMapping("/create")
+    @PostMapping("/auth/create")
     public ResponseEntity<Map<String, Object>> createUser(@RequestBody User user){
         User createdUser=userService.createUser(user);
         return ResponseGenerator.generateSuccessResponse(HttpStatus.CREATED,createdUser);
 //        return ResponseGenerator.generateFailureResponse(HttpStatus.NOT_FOUND,"Sample");
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/create-admin")
+    public ResponseEntity<Map<String,Object>> createAdmin(@RequestBody User user){
+        User createdAdmin=userService.createAdminUser(user);
+        return ResponseGenerator.generateSuccessResponse(HttpStatus.CREATED,createdAdmin);
+    }
+
+    @PostMapping("/auth/login")
     public ResponseEntity<Map<String,Object>> loginUser(@RequestBody Map<String,String> data){
         Map<String,Object> response=userService.loginUser(data);
         return ResponseGenerator.generateSuccessResponse(HttpStatus.OK,response);

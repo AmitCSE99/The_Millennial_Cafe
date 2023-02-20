@@ -10,6 +10,8 @@ public interface UserService {
 
     User createUser(User user);
 
+    User createAdminUser(User user);
+
     User getUserById(String userId) throws ResourceNotFoundException;
 
     Map<String,Object> loginUser(Map<String,String> userData);
