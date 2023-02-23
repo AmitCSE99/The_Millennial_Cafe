@@ -2,8 +2,11 @@ package com.backend.restaurant_service.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,23 +20,31 @@ import java.util.Set;
 public class Menu{
 
     @Id
-    @Column(name = "menu_id")
+    @Column(name = "id")
     private String menuId;
 
-    @Column(name = "menu_name",unique = true)
+    @Column(name = "name",unique = true)
+    @Length(min = 5)
     private String menuName;
 
-    @Column(name = "menu_description")
+    @Column(name = "description")
+    @Length(min = 5)
     private String menuDescription;
 
-    @Column(name="menu_price")
+    @Column(name="price")
+    @Min(10)
     private int menuPrice;
 
-    @Column(name = "menu_discount")
+    @Column(name = "discount",nullable = false)
+    @Min(0)
+    @Max(40)
     private int menuDiscount;
 
+    @Column(name = "is_Recommended",columnDefinition = "boolean default false",nullable = false)
+    private boolean menuIsRecommended;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_name")
+    @JoinColumn(name = "category")
     @JsonBackReference
     private Category category;
 

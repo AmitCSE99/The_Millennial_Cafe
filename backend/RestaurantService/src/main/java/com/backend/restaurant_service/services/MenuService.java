@@ -13,8 +13,6 @@ public interface MenuService {
 
     List<Menu> getAllMenus();
 
-    List<Menu> findByCategory(String categoryId);
-
     void deleteMenuItem(String menuId);
 
     void uploadFile(MultipartFile file);

@@ -2,8 +2,11 @@ package com.backend.restaurant_service.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,16 +20,20 @@ import java.util.Set;
 public class Customise {
 
     @Id
-    @Column(name = "customise_id")
+    @Column(name = "id")
     private String customiseId;
 
-    @Column(name = "customise_name",unique = true)
+    @Column(name = "name",unique = true)
+    @Length(min = 5)
     private String customiseName;
 
-    @Column(name = "customise_description")
+    @Column(name = "description")
+    @Length(min = 5)
     private String customiseDescription;
 
-    @Column(name = "customise_price")
+    @Column(name = "price")
+    @Min(10)
+    @Max(200)
     private int customisePrice;
 
     @ManyToMany(mappedBy = "customisations",fetch = FetchType.EAGER)

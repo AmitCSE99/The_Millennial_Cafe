@@ -1,28 +1,17 @@
 package com.backend.restaurant_service.response_generators;
 
+import com.backend.restaurant_service.responses.FailureResponse;
+import com.backend.restaurant_service.responses.SuccessResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.HashMap;
-import java.util.Map;
+public class ResponseGenerator<T> {
 
-public class ResponseGenerator {
-
-    public static ResponseEntity<Map<String,Object>> generateSuccessResponse(HttpStatus status, Object data){
-        Map<String,Object> responseMap=new HashMap<>();
-        responseMap.put("success",true);
-        responseMap.put("data",data);
-        responseMap.put("status",status.value());
-
-        return ResponseEntity.status(status).body(responseMap);
+    public ResponseEntity<SuccessResponse<T>> generateSuccessResponse(HttpStatus status, T data){
+        return ResponseEntity.status(status).body(new SuccessResponse<>(true,status.value(),data));
     }
 
-    public static ResponseEntity<Map<String,Object>> generateFailureResponse(HttpStatus status,String message){
-        Map<String,Object> responseMap=new HashMap<>();
-        responseMap.put("success",false);
-        responseMap.put("error",message);
-        responseMap.put("status",status.value());
-
-        return ResponseEntity.status(status).body(responseMap);
+    public ResponseEntity<FailureResponse> generateFailureResponse(HttpStatus status, String message){
+        return ResponseEntity.status(status).body(new FailureResponse(false,status.value(),message));
     }
 }

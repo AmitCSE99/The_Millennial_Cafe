@@ -2,6 +2,7 @@ package com.backend.restaurant_service.controllers;
 
 import com.backend.restaurant_service.entities.Category;
 import com.backend.restaurant_service.response_generators.ResponseGenerator;
+import com.backend.restaurant_service.responses.SuccessResponse;
 import com.backend.restaurant_service.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,18 +20,20 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category){
-        return ResponseEntity.ok(categoryService.createCategory(category));
+    public ResponseEntity<SuccessResponse<Category>> createCategory(@RequestBody Category category){
+        Category createdCategory=categoryService.createCategory(category);
+        return new ResponseGenerator<Category>().generateSuccessResponse(HttpStatus.CREATED,createdCategory);
     }
 
     @GetMapping("/get-category")
-    public ResponseEntity<Category> getCategory(@RequestParam String categoryId){
-        return ResponseEntity.ok(categoryService.getCategory(categoryId));
+    public ResponseEntity<SuccessResponse<Category>> getCategory(@RequestParam String categoryId){
+        Category category=categoryService.getCategory(categoryId);
+        return new ResponseGenerator<Category>().generateSuccessResponse(HttpStatus.OK,category);
     }
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> getAllCategories(){
+    public ResponseEntity<SuccessResponse<List<Category>>> getAllCategories(){
         List<Category> categories=categoryService.getAllCategories();
-        return ResponseGenerator.generateSuccessResponse(HttpStatus.OK,categories);
+        return new ResponseGenerator<List<Category>>().generateSuccessResponse(HttpStatus.OK,categories);
     }
 }

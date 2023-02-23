@@ -38,11 +38,6 @@ public class MenuServiceImpl implements MenuService {
         return menuRepository.findAll();
     }
 
-    @Override
-    public List<Menu> findByCategory(String categoryId) {
-        Category category=categoryRepository.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("The category is not found!"));
-        return new ArrayList<>();
-    }
 
     @Override
     public void deleteMenuItem(String menuId) {
