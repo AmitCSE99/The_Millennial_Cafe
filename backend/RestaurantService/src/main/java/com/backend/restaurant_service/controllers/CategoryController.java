@@ -31,7 +31,7 @@ public class CategoryController {
         return new ResponseGenerator<Category>().generateSuccessResponse(HttpStatus.OK,category);
     }
 
-    @GetMapping
+    @GetMapping("/public")
     public ResponseEntity<SuccessResponse<List<Category>>> getAllCategories(){
         List<Category> categories=categoryService.getAllCategories();
         return new ResponseGenerator<List<Category>>().generateSuccessResponse(HttpStatus.OK,categories);

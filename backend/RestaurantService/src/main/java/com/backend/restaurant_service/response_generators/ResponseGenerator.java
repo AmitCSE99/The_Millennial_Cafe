@@ -11,7 +11,7 @@ public class ResponseGenerator<T> {
         return ResponseEntity.status(status).body(new SuccessResponse<>(true,status.value(),data));
     }
 
-    public ResponseEntity<FailureResponse> generateFailureResponse(HttpStatus status, String message){
-        return ResponseEntity.status(status).body(new FailureResponse(false,status.value(),message));
+    public ResponseEntity<FailureResponse> generateFailureResponse(HttpStatus status, String message, String exceptionClass){
+        return ResponseEntity.status(status).body(new FailureResponse(false,status.value(),message, exceptionClass));
     }
 }

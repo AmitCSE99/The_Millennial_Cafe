@@ -7,7 +7,9 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,6 +37,9 @@ public class Menu{
     @Min(10)
     private int menuPrice;
 
+    @Column(name = "image_url")
+    private String menuImageUrl;
+
     @Column(name = "discount",nullable = false)
     @Min(0)
     @Max(40)
@@ -52,5 +57,5 @@ public class Menu{
     @JoinTable(name = "menu_customise",joinColumns = {@JoinColumn(name = "menu_id")},inverseJoinColumns = {
             @JoinColumn(name = "customise_id")
     })
-    private Set<Customise> customisations=new HashSet<>();
+    private List<Customise> customisations=new ArrayList<>();
 }

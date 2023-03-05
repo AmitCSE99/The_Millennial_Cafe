@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class Customise {
 
     @ManyToMany(mappedBy = "customisations",fetch = FetchType.EAGER)
     @JsonBackReference
-    private Set<Menu> menuList;
+    private List<Menu> menuList;
 
     @Override
     public boolean equals(Object o) {

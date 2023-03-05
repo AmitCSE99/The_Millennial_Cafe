@@ -20,6 +20,7 @@ public class SecurityConfig {
 
     @Autowired
     private SecurityContextRepository securityContextRepository;
+    
 
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity httpSecurity) throws Exception {
@@ -40,6 +41,9 @@ public class SecurityConfig {
                 .pathMatchers("/sample").permitAll()
                 .pathMatchers("/user/auth/**").permitAll()
                 .pathMatchers("/user/create-admin").permitAll()
+                .pathMatchers("/user/address/**").hasRole("normal")
+                .pathMatchers("/menu-service/menu/public/**","/menu-service/category/public/**").permitAll()
+                .pathMatchers("/menu-service/menu/**","/menu-service/category/**","/menu-service/customise/**").hasRole("admin")
                 .pathMatchers("/user/testRole").hasRole("normal")
                 .pathMatchers("/user/**").hasRole("normal")
                 .anyExchange().authenticated()

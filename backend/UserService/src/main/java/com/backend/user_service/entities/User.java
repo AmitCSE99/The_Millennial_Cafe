@@ -1,6 +1,5 @@
 package com.backend.user_service.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -8,8 +7,6 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -44,9 +41,13 @@ public class User {
     @Column(name = "PASSWORD",nullable = false)
     private String userPassword;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     @JsonManagedReference
-    private List<Address> address;
+    private Set<Address> userAddress;
+
+    @OneToMany(mappedBy = "user",fetch =FetchType.EAGER)
+    @JsonManagedReference
+    private Set<Cart> userCartItems;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -60,7 +61,7 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(userEmail, user.userEmail) && Objects.equals(userPassword, user.userPassword) && Objects.equals(address, user.address) && Objects.equals(roles, user.roles);
+        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(userEmail, user.userEmail) && Objects.equals(userPassword, user.userPassword) && Objects.equals(userAddress, user.userAddress) && Objects.equals(userCartItems, user.userCartItems) && Objects.equals(roles, user.roles);
     }
 
 }

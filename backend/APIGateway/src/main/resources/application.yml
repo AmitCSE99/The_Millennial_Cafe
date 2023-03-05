@@ -7,33 +7,42 @@ springbootwebfluxjjwt:
     expiration: 3
 
 spring:
-  security:
-    user:
-      name: amit
-      password: amit
-  datasource:
-    url: jdbc:mysql://localhost:3306/millennial_cafe_user_service
-    username: root
-    password: Amitendu99@
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-    jpa:
-      hibernate:
-        ddl-auto: update
-      show-sql: true
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.MySQL8Dialect
+#  security:
+#    user:
+#      name: amit
+#      password: amit
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/millennial_cafe_user_service
+#    username: root
+#    password: Amitendu99@
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#    jpa:
+#      hibernate:
+#        ddl-auto: update
+#      show-sql: true
+#      properties:
+#        hibernate:
+#          dialect: org.hibernate.dialect.MySQL8Dialect
   application:
     name: API-GATEWAY
 
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
       routes:
         - id: USER-SERVICE
-          uri: lb://USER-SERVICE
+          uri: lb://USER-SERVICE/
           predicates:
             - Path=/user/**
+
+        - id: MENU-SERVICE
+          uri: lb://MENU-SERVICE/
+          predicates:
+            - Path=/menu-service/**
 
 eureka:
   instance:

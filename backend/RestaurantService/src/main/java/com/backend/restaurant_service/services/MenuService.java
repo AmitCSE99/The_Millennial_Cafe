@@ -9,15 +9,13 @@ import java.util.Set;
 
 public interface MenuService {
 
-    Menu createMenu(Menu menu);
+    Menu createMenu(Menu menu,MultipartFile menuImage);
 
     List<Menu> getAllMenus();
 
     void deleteMenuItem(String menuId);
 
-    void uploadFile(MultipartFile file);
+    Menu addCustomisation(String menuId, List<Customise> customise);
 
-    Menu addCustomisation(String menuId, Set<Customise> customise);
-
-    Menu deleteCustomisation(String menuId,Set<Customise> customise);
+    Menu deleteCustomisation(String menuId, List<Customise> customise);
 }

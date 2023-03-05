@@ -11,5 +11,6 @@ public class FailureResponse {
 
     private boolean success;
     private int status;
+    private String exceptionClass;
     private String message;
 }

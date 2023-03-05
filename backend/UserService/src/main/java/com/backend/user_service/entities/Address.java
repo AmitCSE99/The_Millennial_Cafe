@@ -34,7 +34,7 @@ public class Address {
     @Column(name = "PIN_CODE",nullable = false)
     private int addressPinCode;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;

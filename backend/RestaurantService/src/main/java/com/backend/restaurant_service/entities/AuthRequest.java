@@ -2,6 +2,7 @@ package com.backend.restaurant_service.entities;
 
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -12,5 +13,5 @@ import java.util.Set;
 public class AuthRequest {
 
     private String menuId;
-    private Set<Customise> customisations;
+    private List<Customise> customisations;
 }
